@@ -1,7 +1,7 @@
 # DDPG
-I![](/home/benoit/Documents/work/RL_algos/PPO/.images/ppo.svg)
+![](.images/ppo.svg)
 
-[paper here](
+[paper here](https://arxiv.org/abs/1707.06347)
 
 ### Cartpole -v0
 
