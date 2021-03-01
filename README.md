@@ -1,4 +1,4 @@
-# DDPG
+# PPO
 ![](.images/algorithm.png)
 
 [paper here](https://arxiv.org/abs/1707.06347)
