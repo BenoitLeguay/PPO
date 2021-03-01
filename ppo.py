@@ -131,21 +131,22 @@ class PPOActor(torch.nn.Module):
         self.loss_history = list()
         self.input_image = actor_init["input_as_image"]
 
-        self.conv_layer = nn.Sequential(
-            nn.Conv2d(in_channels=net["cl1_channels"],
-                      out_channels=net["cl2_channels"],
-                      kernel_size=net["cl1_kernel_size"],
-                      stride=net["cl1_stride"],
-                      padding=net["cl1_padding"]
-                      ),
-            nn.LeakyReLU(0.1),
-            nn.Conv2d(in_channels=net["cl2_channels"],
-                      out_channels=net["out_channels"],
-                      kernel_size=net["cl2_kernel_size"],
-                      stride=net["cl2_stride"],
-                      padding=net["cl2_padding"]
-                      )
-        )
+        if self.input_image:
+            self.conv_layer = nn.Sequential(
+                nn.Conv2d(in_channels=net["cl1_channels"],
+                          out_channels=net["cl2_channels"],
+                          kernel_size=net["cl1_kernel_size"],
+                          stride=net["cl1_stride"],
+                          padding=net["cl1_padding"]
+                          ),
+                nn.LeakyReLU(0.1),
+                nn.Conv2d(in_channels=net["cl2_channels"],
+                          out_channels=net["out_channels"],
+                          kernel_size=net["cl2_kernel_size"],
+                          stride=net["cl2_stride"],
+                          padding=net["cl2_padding"]
+                          )
+            )
 
         self.relu = nn.ReLU()
         self.softmax = nn.Softmax(dim=1)
@@ -195,6 +196,8 @@ class PPOActor(torch.nn.Module):
 class PPOCritic(torch.nn.Module):
     """
     Value based Critic used to estimate V(s) in order to compute A(s).
+
+
     """
     def __init__(self, critic_init):
         super(PPOCritic, self).__init__()
@@ -203,22 +206,22 @@ class PPOCritic(torch.nn.Module):
         self.optimizer = None
         self.loss_history = list()
         self.input_image = critic_init["input_as_image"]
-
-        self.conv_layer = nn.Sequential(
-            nn.Conv2d(in_channels=net["cl1_channels"],
-                      out_channels=net["cl2_channels"],
-                      kernel_size=net["cl1_kernel_size"],
-                      stride=net["cl1_stride"],
-                      padding=net["cl1_padding"]
-                      ),
-            nn.LeakyReLU(0.1),
-            nn.Conv2d(in_channels=net["cl2_channels"],
-                      out_channels=net["out_channels"],
-                      kernel_size=net["cl2_kernel_size"],
-                      stride=net["cl2_stride"],
-                      padding=net["cl2_padding"]
-                      )
-        )
+        if self.input_image:
+            self.conv_layer = nn.Sequential(
+                nn.Conv2d(in_channels=net["cl1_channels"],
+                          out_channels=net["cl2_channels"],
+                          kernel_size=net["cl1_kernel_size"],
+                          stride=net["cl1_stride"],
+                          padding=net["cl1_padding"]
+                          ),
+                nn.LeakyReLU(0.1),
+                nn.Conv2d(in_channels=net["cl2_channels"],
+                          out_channels=net["out_channels"],
+                          kernel_size=net["cl2_kernel_size"],
+                          stride=net["cl2_stride"],
+                          padding=net["cl2_padding"]
+                          )
+            )
 
         self.relu = nn.ReLU()
         self.softmax = nn.Softmax(dim=1)
